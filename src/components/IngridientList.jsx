@@ -11,7 +11,7 @@ export default function Ingredient(props) {
                 {renderIngredient}
             </ul>
             {!props.loading && props.ingredient.length > 2 && 
-                <div className='bg-[#f0efeb] flex items-center justify-between p-5 rounded-xl'>
+                <div ref={props.ref} className='bg-[#f0efeb] flex items-center justify-between p-5 rounded-xl'>
                     <div className='space-y-3'>
                         <h3 className='text-xl font-semibold'> Ready for recipe? </h3>
                         <p className='text-gray-500'> Generate a recipe from your list of ingredients. </p>

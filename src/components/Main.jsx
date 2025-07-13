@@ -1,5 +1,5 @@
 import { Plus } from 'lucide-react'
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import Recipe from "./Recipe.jsx"
 import Ingridient from "./IngridientList.jsx"
 import {getRecipeFromMistral, getRecipeFromGemini} from '../ai.js'
@@ -10,6 +10,13 @@ export function Main() {
     const [recipeShown, setRecipeShown] = useState(false)
     const [recipe, setRecipe] = useState("")
     const [loading, setLoading] = useState(false)// <-- Add this
+    const recipeSection = useRef(null)
+
+    useEffect(() => {
+        if (recipe !== "" && recipeSection.current !== null) {
+            recipeSection.current.scrollIntoView()
+        }
+    },[recipe])
 
     async function getRecipe() {
         setLoading(true)
@@ -17,7 +24,7 @@ export function Main() {
         setRecipe(result)
         setRecipeShown(true)
         setLoading(false) 
-
+        
     }
 
     function toggleShow() {
@@ -50,6 +57,7 @@ export function Main() {
                 </form>
                     {ingredient.length > 0 && 
                         <Ingridient 
+                            ref={recipeSection}
                             ingredient={ingredient}
                             toggleShow={toggleShow} 
                             getRecipe={getRecipe}
